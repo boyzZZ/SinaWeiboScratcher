@@ -34,9 +34,7 @@ public class GetCookie {
 	
 	/**
 	 * 首先要理顺浏览器的各种顺序，用程序模拟浏览器时，是没有Cookie的，所以顺序如下：
-	 * 1、进入http://login.weibo.cn/login
-	 * /?ns=1&revalid=2&backURL=http%3A%2F%2Fweibo
-	 * .cn%2F&backTitle=%CE%A2%B2%A9&vt=4 (不需要任何Cookie，进入后会设置一个Cookie)
+	 * 1、进入http://login.weibo.cn/login (不需要任何Cookie，进入后会设置一个Cookie)
 	 * 以其他地址进入登录页面，输入信息会导致返回登陆页面内，此登录页面对于登录非常重要，很多参数需要从该页面提取。
 	 * 2、在该页面输入用户名、密码、验证码即可登录
 	 * ，所有信息都正确后，并不是像浏览器那样，自动进行location的跳转，我们如果需要获得所有Cookie，需要模拟浏览器进行一个个页面的跳转。
@@ -44,12 +42,14 @@ public class GetCookie {
 	 * ，所以我们不必跳转那么多页面，只用登陆成功后，获得相应头，看Set-Cookie的值，获取即可。 具体的跳转页面请见： 本包中 login.txt
 	 * */
 	
-
+    /**
+     * 获取验证码并进行本地存储到data\code.gif中
+     **/ 
 	public static void getCode() throws ClientProtocolException, IOException {
-		// No.1获取登录页面的数据
-		String address = "http://login.weibo.cn/login/?ns=1&revalid=2&backURL=http%3A%2F%2Fweibo.cn%2F&backTitle=%CE%A2%B2%A9&vt=4";
-		// 只有这个地址进入登陆界面才能顺利登录
-
+		// No.1获取登录页面的数据 ,只有这个地址进入登陆界面才能顺利登录
+		String address = "http://login.weibo.cn/login/?ns=1&revalid=2&backURL=" +
+				"http%3A%2F%2Fweibo.cn%2F&backTitle=%CE%A2%B2%A9&vt=4";
+		
 		// No.2 模拟请求+解析登录页面，准备好提交时需要的参数
 		HttpClient httpClient = new DefaultHttpClient();
 		HttpGet request = new HttpGet(address);
@@ -64,6 +64,7 @@ public class GetCookie {
 		FileWriter fw = new FileWriter(file);
 		fw.write(content);
 		fw.flush();
+		
 		// 获取相应头中设置的Cookie
 		String cookie_T_WM = "";
 		for (Header h : headers) {
@@ -78,6 +79,7 @@ public class GetCookie {
 		File gif = new File("data\\code.gif");
 		Document doc = Jsoup.parse(content);
 		String imageaddress = doc.getElementsByTag("img").attr("src");
+		
 		// 获取gif图片
 		request = new HttpGet(imageaddress);
 		response = httpClient.execute(request);
@@ -90,8 +92,12 @@ public class GetCookie {
 		}
 		fileoutput.close();
 		gifinput.close();
-
 	}
+	
+	/**
+	 * @param username,password,code
+	 * 提交数据，获取Cookies,存在data\cookies.properties中
+	 */
 	public static void getCookies(String username, String password, String code)
 			throws ClientProtocolException, IOException {
 		Document doc = Jsoup.parse(new File("data\\login.html"), "UTF-8");
@@ -101,7 +107,6 @@ public class GetCookie {
 		String password_xxxx = doc
 				.getElementsByAttributeValue("type", "password").get(0)
 				.attr("name");
-//		String code = new String(new Scanner(System.in).next());
 		Elements hiddens = doc.getElementsByAttributeValue("type", "hidden");
 		String backURL = hiddens.get(0).attr("value");
 		String backTitle = hiddens.get(1).attr("value");
@@ -122,7 +127,8 @@ public class GetCookie {
 				"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
 		post.addHeader("Connection", "keep-alive");
 		post.addHeader("Cookie", cookie_T_WM);
-		post.addHeader("Referer", "http://login.weibo.cn/login/?ns=1&revalid=2&backURL=http%3A%2F%2Fweibo.cn%2F&backTitle=%CE%A2%B2%A9&vt=4");
+		post.addHeader("Referer", "http://login.weibo.cn/login/?ns=1&revalid=2&backURL=http%3" +
+				"A%2F%2Fweibo.cn%2F&backTitle=%CE%A2%B2%A9&vt=4");
 
 		List<NameValuePair> nvps = new ArrayList<NameValuePair>();
 		nvps.add(new BasicNameValuePair("mobile", username));

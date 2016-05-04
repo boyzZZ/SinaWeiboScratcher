@@ -86,7 +86,7 @@ public class Client {
 		} catch (Exception e){
 			e.printStackTrace();
 		}
-     	new LoginClient().setVisible(true);
+     	new TaskClient().setVisible(true);
    }
 }
 
