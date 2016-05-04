@@ -1,0 +1,39 @@
+1、登录成功后设置的Cookie：
+ SUB=_2A256B-F_DeRxGeVG6lQS8i_Lyj-IHXVZC483rDV6PUJbrdANLRDckW1LHetQ7M28pkQ4TGoB6BuKz5W9DodKGA..
+ gsid_CTandWM=4u0Mb1311Dvg97gjeSJqag0Nzbv
+ PHPSESSID=698cb4a2b2ac848f10c44ee14191be00
+
+2、跳转到：（不需要Cookie）
+http://newlogin.sina.cn/crossDomain/?g=4u0Mb1311Dvg97gjeSJqag0Nzbv&t=1459851567&m=66f6&r=&u=http%3A%2F%2Fweibo.cn%2F%3Fpos%3D65%26amp%3Bs2w%3Dadmin%26amp%3Bfrom%3Dhome%26gsid%3D4u0Mb1311Dvg97gjeSJqag0Nzbv%26vt%3D4&cross=1&st=ST-MzgxNjMyMTcxMw==-1459851567-yf-6906CC6DA8060BE864D5141C83D05787,ST-MzgxNjMyMTcxMw==-1459851567-yf-B182DE88DBB88BAF7409093607BAB764&vt=4
+
+设置很多Cookie：
+ SUB=_2A256B-F_DeTxGeVG6lQS8i_Lyj-IHXVZC483rDV9PUJbrdANLRGikW1LHesHiT5b7YcyBAmSPQYosefjCU6oIQ..
+ SUBP=0033WrSXqPxfM725Ws9jqgMF55529P9D9WWrSOd5hizYTyAbMohecfgi5JpX5oz7
+ gsid_CTandWM=4u0Mb1311Dvg97gjeSJqag0Nzbv
+
+3、跳转到：（需要Cookie）
+http://passport.weibo.com/sso/crossdomain?service=sinawap&entry=sinawap&action=login&ticket=ST-MzgxNjMyMTcxMw%3D%3D-1459851567-yf-B182DE88DBB88BAF7409093607BAB764&proj=1&display=0&cdurl=http%3A%2F%2Fweibo.cn%2F%3Fpos%3D65%26amp%3Bs2w%3Dadmin%26amp%3Bfrom%3Dhome%26gsid%3D4u0Mb1311Dvg97gjeSJqag0Nzbv%26vt%3D4
+
+设置的Cookie：
+ SSOLoginState=1459851567
+ SUS=SID-3816321713-1459851567-GZ-2onub-a655584edd2ad8556dfa95852ea5e504
+ SUE=es%3Df46b1db7c5fc1850756137fcea9966c1%26ev%3Dv1%26es2%3Dd33ff06b9889a6467346997549344066%26rs0%3DpqBd%252FgeBqoFI7Lxi85Cby0bvOOGCOy2yWYdBwOFnzI63TWYiS7Io%252Bgl31bg6%252BnLKVx9q4dueTJFObirvaqhK2HkmUG5mVC3Vo8kMxcfSbUyTR2OQAkz0eYYyO8%252FuMhGo%252FRiZjDKeowBlKAmsSkAxuKb60kf8zTl5bMACQoTbW4I%253D%26rv%3D0
+ SUP=cv%3D1%26bt%3D1459851567%26et%3D1459937967%26d%3Dc909%26i%3De504%26us%3D1%26vf%3D%26vt%3D%26ac%3D%26st%3D0%26uid%3D3816321713%26name%3D15652355584%26nick%3Dfly%25E8%2589%25BE%25E4%25B8%259D%25E5%2587%25A1%26fmp%3D%26lcp%3D2016-01-26%252013%253A53%253A34
+ SUB=_2A256B-F_DeRxGeVG6lQS8i_Lyj-IHXVZC483rDV8PEJb6dNefiGXkm5JS1V9yHFCdA3mcKip3asvmUI_ttc.
+ SUBP=0033WrSXqPxfM725Ws9jqgMF55529P9D9WWrSOd5hizYTyAbMohecfgi
+
+4、然后接着跳转：（需要Cookie）
+http://weibo.cn/?pos=65&amp%3Bs2w=admin&amp%3Bfrom=home&gsid=4u0Mb1311Dvg97gjeSJqag0Nzbv&vt=4
+
+需要Cookie为
+    SUB=_2A256B-F_DeRxGeVG6lQS8i_Lyj-IHXVZC483rDV6PUJbrdANLRDckW1LHetQ7M28pkQ4TGoB6BuKz5W9DodKGA..
+    _T_WM=6f8ac4bc6e65cfe8042b17d64204b08b
+    gsid_CTandWM=4u0Mb1311Dvg97gjeSJqag0Nzbv
+
+5、最后一步的跳转：（需要Cookie）
+http://weibo.cn/?pos=65&amp%3Bs2w=admin&amp%3Bfrom=home&vt=4
+
+需要的Cookie为：
+    _T_WM=6f8ac4bc6e65cfe8042b17d64204b08b
+    SUB=_2A256B-F_DeRxGeVG6lQS8i_Lyj-IHXVZC483rDV6PUJbrdANLRDckW1LHetQ7M28pkQ4TGoB6BuKz5W9DodKGA..
+    gsid_CTandWM=4u0Mb1311Dvg97gjeSJqag0Nzbv

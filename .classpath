@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="F:/lib/commons-codec-1.9.jar"/>
+	<classpathentry kind="lib" path="F:/lib/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="F:/lib/httpclient-4.5.2.jar"/>
+	<classpathentry kind="lib" path="F:/lib/httpclient-cache-4.5.2.jar"/>
+	<classpathentry kind="lib" path="F:/lib/httpclient-win-4.5.2.jar"/>
+	<classpathentry kind="lib" path="F:/lib/httpcore-4.4.4.jar"/>
+	<classpathentry kind="lib" path="F:/lib/httpmime-4.5.2.jar"/>
+	<classpathentry kind="lib" path="F:/lib/je-analysis-1.5.3.jar"/>
+	<classpathentry kind="lib" path="F:/lib/jsoup-1.8.3.jar"/>
+	<classpathentry kind="lib" path="F:/lib/jexl/jexcelapi/jxl.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
