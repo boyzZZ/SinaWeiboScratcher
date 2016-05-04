@@ -2,7 +2,7 @@ package com.fly.function;
 
 import java.util.ArrayList;
 
-import com.fly.store.OracleStorage;
+import com.fly.store.MySQLStorage;
 import com.fly.thread.ClassifyWorker;
 import com.fly.thread.ClassifyWorker1;
 import com.fly.thread.LastClassifyWorker;
@@ -16,9 +16,9 @@ import com.fly.thread.LastClassifyWorker1;
  */
 public class ClassifyWeiBo {
 
-	private  OracleStorage st=null;
+	private  MySQLStorage st=null;
 	public ClassifyWeiBo(){
-		this.st=new OracleStorage();
+		this.st=new MySQLStorage();
 	}
 	public  void classify(){
 		//先将微博存为文件的形式

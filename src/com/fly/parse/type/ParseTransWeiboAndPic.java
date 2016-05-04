@@ -8,7 +8,7 @@ import org.jsoup.select.Elements;
 import com.fly.base.GlobalVar;
 import com.fly.model.TransArticle;
 import com.fly.parse.DateParse;
-import com.fly.store.OracleStorage;
+import com.fly.store.MySQLStorage;
 
 public class ParseTransWeiboAndPic {
 	/**
@@ -122,7 +122,7 @@ public class ParseTransWeiboAndPic {
 				article.setAtPeoples(Atothers);
 			}
 		    try {
-				new OracleStorage().insertTransWeibo(article);  //将实例化的原创微博存入数据库
+				new MySQLStorage().insertTransWeibo(article);  //将实例化的原创微博存入数据库
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}		

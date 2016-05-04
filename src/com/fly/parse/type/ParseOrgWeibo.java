@@ -8,7 +8,7 @@ import org.jsoup.select.Elements;
 import com.fly.base.GlobalVar;
 import com.fly.model.OrgArticle;
 import com.fly.parse.DateParse;
-import com.fly.store.OracleStorage;
+import com.fly.store.MySQLStorage;
 /**
  * 八大类别之一   
  * 原创无图+无限制
@@ -106,7 +106,7 @@ public class ParseOrgWeibo implements WeiboParseProcessor{
 					article.setAtPeoples(atothers);
 				}
 		    }
-				OracleStorage.insertInitWeibo(article);  //将实例化的原创微博存入数据库
+				MySQLStorage.insertInitWeibo(article);  //将实例化的原创微博存入数据库
 					
 	}
 }

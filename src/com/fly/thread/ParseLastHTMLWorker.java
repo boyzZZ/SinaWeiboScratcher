@@ -89,7 +89,7 @@ public class ParseLastHTMLWorker implements Runnable {
 					e.printStackTrace();
 					try {
 						FileWriter fw=new FileWriter(new File("data\\error.txt"));
-						fw.write(e.getMessage()+"                 第"+i+"个页面的第"+a+"条微博未成功插入，请检查！");
+						fw.write(e.getMessage()+"        第"+i+"个页面的第"+a+"条微博未成功插入，请检查！\r\n");
 						fw.close();
 					} catch (IOException e1) {
 						e1.printStackTrace();

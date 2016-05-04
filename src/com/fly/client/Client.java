@@ -42,21 +42,25 @@ import com.fly.function.HTMLTool;
 import com.fly.function.repair.CheckHTML;
 import com.fly.model.OrgArticle;
 import com.fly.model.TransArticle;
-import com.fly.store.OracleStorage;
+import com.fly.store.MySQLStorage;
 import com.fly.thread.ProcessDownload;
 import com.fly.thread.ProcessParse;
 
-
+/**
+ * 主程序运行起点，也是所有图形化界面的类，该类的编写过程由NetBeans来编写
+ * @author fly
+ *
+ */
 public class Client {
-	public final static String HTML_PATH="html\\";
-	public final static String CATEGORY_DIR="category";
+	
+	public final static String HTML_PATH = "html\\";
+	public final static String CATEGORY_DIR = "category";
 	
 	/**
 	 * 系统初始化，各种文件夹的准备
 	 */
 	private void init(){
-		String  path="D:"+File.separator+"example";
-		System.out.println(path);
+		
 		File html_dir=new File("html");
 		if(!html_dir.exists()){
 			html_dir.mkdir();
@@ -82,7 +86,7 @@ public class Client {
 		} catch (Exception e){
 			e.printStackTrace();
 		}
-     	new ShowClient().setVisible(true);
+     	new LoginClient().setVisible(true);
    }
 }
 
@@ -95,14 +99,9 @@ public class Client {
 
 class LoginClient extends javax.swing.JFrame {
 
-    /**
-	 * 
-	 */
+    
 	private static final long serialVersionUID = 1L;
 
-	/**
-     * Creates new form SinaWeibo
-     */
     public LoginClient() {
         initComponents();
     }
@@ -846,7 +845,7 @@ class ShowClient extends javax.swing.JFrame implements ItemListener{
 	  private javax.swing.JButton search_ok;
 	  private javax.swing.JLabel search_tips;
 	  private javax.swing.JPanel showPanel;
-	  private OracleStorage store=new OracleStorage();
+	  private MySQLStorage store=new MySQLStorage();
 	  // End of variables declaration 
   /**
 	 * 
@@ -924,12 +923,12 @@ class ShowClient extends javax.swing.JFrame implements ItemListener{
         	  String key=jTextField1.getText();
               System.out.println(key);
               ArrayList<String[]> show_weibos=new ArrayList<String[]>();
-              ArrayList<OrgArticle> search_org=new OracleStorage().searchOrgWeibos(key);
+              ArrayList<OrgArticle> search_org=new MySQLStorage().searchOrgWeibos(key);
               for(OrgArticle article:search_org){
             	  String[] s={article.getAid(),article.getCategory(),"原创",article.getContent(),article.getPubtime()};
             	  show_weibos.add(s);
               }
-              ArrayList<TransArticle> search_trans=new OracleStorage().searchTransWeibos(key);
+              ArrayList<TransArticle> search_trans=new MySQLStorage().searchTransWeibos(key);
               for(TransArticle article:search_trans){
             	  String[] s={article.getAid(),article.getCategory(),"转发",article.getContent(),article.getPubtime()};
             	  show_weibos.add(s);
@@ -1307,7 +1306,7 @@ public void itemStateChanged(ItemEvent e) {
 	 ArrayList<String[]> show_weibos=new ArrayList<String[]>();
      ArrayList<OrgArticle> search_org=new ArrayList<OrgArticle>();
 	try {
-		search_org = new OracleStorage().searchOrgByCategory(category);
+		search_org = new MySQLStorage().searchOrgByCategory(category);
 	} catch (SQLException e1) {
 		e1.printStackTrace();
 	}
@@ -1317,7 +1316,7 @@ public void itemStateChanged(ItemEvent e) {
      }
      ArrayList<TransArticle> search_trans=new ArrayList<TransArticle>();
 	try {
-		search_trans = new OracleStorage().searchTransByCategory(category);
+		search_trans = new MySQLStorage().searchTransByCategory(category);
 	} catch (SQLException e1) {
 		e1.printStackTrace();
 	}

@@ -5,12 +5,12 @@ import java.util.ArrayList;
 
 import com.fly.client.Client;
 import com.fly.function.classify.bayes.BayesClassfier;
-import com.fly.store.OracleStorage;
+import com.fly.store.MySQLStorage;
 
 public class LastClassifyWorker implements Runnable{
 
 	private ArrayList<String> weibo_ids=new ArrayList<String>();
-	private OracleStorage store;
+	private MySQLStorage store;
 	private int left;
 	private int zheng;
 	public LastClassifyWorker(ArrayList<String> ids,int left,int zheng){
@@ -18,7 +18,7 @@ public class LastClassifyWorker implements Runnable{
 		System.out.println(zheng);
 		System.out.println(ids);
 		this.weibo_ids=ids;
-		store=new OracleStorage();
+		store=new MySQLStorage();
 		this.left=left;
 		this.zheng=zheng;
 	}

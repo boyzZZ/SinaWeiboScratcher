@@ -21,7 +21,7 @@ import org.jsoup.nodes.Document;
 
 import com.fly.client.Client;
 import com.fly.function.repair.Repair;
-import com.fly.store.OracleStorage;
+import com.fly.store.MySQLStorage;
 import com.fly.thread.DownloadLastWorker;
 import com.fly.thread.DownloadWorker;
 import com.fly.thread.ParseHTMLWorker;
@@ -187,7 +187,7 @@ public class HTMLTool {
 	}
 	
     public static int getFinishedNumber(){
-    	OracleStorage st=new OracleStorage();
+    	MySQLStorage st=new MySQLStorage();
     	int x=0,y=0;
     	try{
     	x=st.getInitWeibos();

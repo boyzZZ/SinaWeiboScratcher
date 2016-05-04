@@ -18,6 +18,7 @@ import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
 import jxl.write.biff.RowsExceededException;
 
+import com.fly.function.HTMLTool;
 import com.fly.model.OrgArticle;
 import com.fly.model.TransArticle;
 
@@ -30,7 +31,7 @@ public class MySQLStorage {
 		Connection conn=null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			conn=DriverManager.getConnection("jdbc:mysql://127.0.0.1/sinaweibo","root","root");
+			conn=DriverManager.getConnection("jdbc:mysql://127.0.0.1/sinaweibo","root","woaininannan");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
@@ -83,14 +84,16 @@ public class MySQLStorage {
 	 * 插入操作，插入原创微博数据
 	 */
 	public static void insertInitWeibo(OrgArticle article) throws SQLException{
+		if(article.getAid()==null){
+			System.out.println("这个Article有问题，ID为空！");
+		}
 		String SQL="INSERT INTO  WEIBO_INIT VALUES('"+article.getAid()+"','"+article.getContent()+"',"+0+","+article.getTransamt()+","
-	   +article.getCommentamt()+","+article.getPraiseamt()+",to_date('"+article.getPubtime()+"','yyyy-mm-dd hh24:mi:ss'),'"+article.isCtnPic()+"','"+article.isCtnURL()+"','"
+	   +article.getCommentamt()+","+article.getPraiseamt()+",'"+article.getPubtime()+"','"+article.isCtnPic()+"','"+article.isCtnURL()+"','"
 	   +article.isAtOthers()+"','"+article.getPakageName()+"','"+article.getUrl()+"','"+article.getAtPeoples()+"','')";
 		System.out.println(article.getPubtime());
 		Connection conn=getConnection();
 		Statement stmt=conn.createStatement();
 		stmt.execute(SQL);
-		conn.commit();
 		stmt.close();
 		conn.close();
 		
@@ -100,14 +103,13 @@ public class MySQLStorage {
 	 */
 	public void insertTransWeibo(TransArticle article) throws SQLException{
 		String sql="Insert into Weibo_trans values('"+article.getAid()+"','"+article.getContent()+"',0,"+article.getTransamt()+","
-				+article.getCommentamt()+","+article.getPraiseamt()+",to_date('"+article.getPubtime()+"','yyyy-mm-dd hh24:mi:ss'),'"+article.getOrgAuthor()+"','"+article.getOrgContent()
+				+article.getCommentamt()+","+article.getPraiseamt()+",'"+article.getPubtime()+"','"+article.getOrgAuthor()+"','"+article.getOrgContent()
 				+"',0,"+article.getOrgtransamt()+","+article.getOrgcommentamt()+","+article.getOrgpraiseamt()+",'"+article.getOrpubtime()+"','"+
 				article.isOrgisCtnPic()+"','"+article.isOrgisCtnURL()+"','"+article.isOrgisAtOthers()+"','"+article.getOrgpakageName()+"','"+article.getOrgurl()
 				+"','"+article.getOrgAtPeoples()+"','"+article.getContent()+"','"+article.isAtOthers()+"','"+article.getAtPeoples()+"','')";
 		Connection conn=getConnection();
 		Statement stmt=conn.createStatement();
 		stmt.execute(sql);
-		conn.commit();
 		stmt.close();
 		
 		if(conn!=null){
@@ -802,14 +804,9 @@ public class MySQLStorage {
 		return article;	
 	}
 	public static void main(String[] args) throws IOException {
-			
-		try {
-			int a=new MySQLStorage().getFinishedClassifiedNumber();
-			System.out.println(a);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}	
+		
+			HTMLTool.parseHTML();
+		
 			
 		}
 }

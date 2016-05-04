@@ -146,5 +146,8 @@ public class OrgArticle {
 		AtPeoples = atPeoples;
 	}
 	
-	
+	public String toString(){
+		return "["+aid+","+content+"]";
+		
+	}
 }

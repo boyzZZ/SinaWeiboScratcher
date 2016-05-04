@@ -52,7 +52,6 @@ public class ParseHTMLWorker implements Runnable {
 				if(all_weibos.size()!=12){
 					System.out.println("这是第"+(i+index*100)+"个页面,本页面共有"+(all_weibos.size()-2)+"条微博，"+"正在打印的是第"+a+"条微博，微博的类型是"+type);
 				}
-				System.out.println(type);
 				switch(type){
 				case 'A':  //原创  无图 无限制
 					new ParseOrgWeibo().parse(all_weibos.get(a));
@@ -85,7 +84,7 @@ public class ParseHTMLWorker implements Runnable {
 				e.printStackTrace();
 				try {
 					FileWriter fw=new FileWriter(new File("data\\error.txt"),true);
-					fw.write(e.getMessage()+"第"+i+"个页面的第"+a+"条微博未成功插入，请检查！");
+					fw.write(e.getMessage()+"     第"+i+"个页面的第"+a+"条微博未成功插入，请检查！\r\n");
 					System.out.println(e.getMessage()+"第"+i+"个页面的第"+a+"条微博未成功插入，请检查！");
 					fw.close();
 				} catch (IOException e1) {
