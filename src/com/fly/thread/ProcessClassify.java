@@ -5,12 +5,12 @@ import java.sql.SQLException;
 import javax.swing.JProgressBar;
 
 import com.fly.function.HTMLTool;
-import com.fly.store.StorageTool;
+import com.fly.store.OracleStorage;
 
 public class ProcessClassify implements Runnable {
 
 	private JProgressBar progressbar=new JProgressBar();
-	private StorageTool store=new StorageTool();
+	private OracleStorage store=new OracleStorage();
 	public ProcessClassify(JProgressBar j){
 		this.progressbar=j;
 	}

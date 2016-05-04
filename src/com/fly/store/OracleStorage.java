@@ -21,7 +21,7 @@ import jxl.write.biff.RowsExceededException;
 import com.fly.model.OrgArticle;
 import com.fly.model.TransArticle;
 
-public class StorageTool {
+public class OracleStorage {
 
 	/*
 	 * 数据库初始化
@@ -804,7 +804,7 @@ public class StorageTool {
 	public static void main(String[] args) throws IOException {
 			
 		try {
-			int a=new StorageTool().getFinishedClassifiedNumber();
+			int a=new OracleStorage().getFinishedClassifiedNumber();
 			System.out.println(a);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

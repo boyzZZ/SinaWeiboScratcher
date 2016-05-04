@@ -8,7 +8,7 @@ import org.jsoup.select.Elements;
 import com.fly.base.GlobalVar;
 import com.fly.model.OrgArticle;
 import com.fly.parse.DateParse;
-import com.fly.store.StorageTool;
+import com.fly.store.OracleStorage;
 /**
  * 八大类别之一
  * 原创有图+无限制
@@ -81,7 +81,7 @@ public class ParseOrgWeiboAndPic implements WeiboParseProcessor {
 		}
 		
 		//Store into DataBase
-			StorageTool.insertInitWeibo(article);
+			OracleStorage.insertInitWeibo(article);
 		
 			
 		    

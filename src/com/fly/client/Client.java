@@ -42,7 +42,7 @@ import com.fly.function.HTMLTool;
 import com.fly.function.repair.CheckHTML;
 import com.fly.model.OrgArticle;
 import com.fly.model.TransArticle;
-import com.fly.store.StorageTool;
+import com.fly.store.OracleStorage;
 import com.fly.thread.ProcessDownload;
 import com.fly.thread.ProcessParse;
 
@@ -846,7 +846,7 @@ class ShowClient extends javax.swing.JFrame implements ItemListener{
 	  private javax.swing.JButton search_ok;
 	  private javax.swing.JLabel search_tips;
 	  private javax.swing.JPanel showPanel;
-	  private StorageTool store=new StorageTool();
+	  private OracleStorage store=new OracleStorage();
 	  // End of variables declaration 
   /**
 	 * 
@@ -924,12 +924,12 @@ class ShowClient extends javax.swing.JFrame implements ItemListener{
         	  String key=jTextField1.getText();
               System.out.println(key);
               ArrayList<String[]> show_weibos=new ArrayList<String[]>();
-              ArrayList<OrgArticle> search_org=new StorageTool().searchOrgWeibos(key);
+              ArrayList<OrgArticle> search_org=new OracleStorage().searchOrgWeibos(key);
               for(OrgArticle article:search_org){
             	  String[] s={article.getAid(),article.getCategory(),"原创",article.getContent(),article.getPubtime()};
             	  show_weibos.add(s);
               }
-              ArrayList<TransArticle> search_trans=new StorageTool().searchTransWeibos(key);
+              ArrayList<TransArticle> search_trans=new OracleStorage().searchTransWeibos(key);
               for(TransArticle article:search_trans){
             	  String[] s={article.getAid(),article.getCategory(),"转发",article.getContent(),article.getPubtime()};
             	  show_weibos.add(s);
@@ -1307,7 +1307,7 @@ public void itemStateChanged(ItemEvent e) {
 	 ArrayList<String[]> show_weibos=new ArrayList<String[]>();
      ArrayList<OrgArticle> search_org=new ArrayList<OrgArticle>();
 	try {
-		search_org = new StorageTool().searchOrgByCategory(category);
+		search_org = new OracleStorage().searchOrgByCategory(category);
 	} catch (SQLException e1) {
 		e1.printStackTrace();
 	}
@@ -1317,7 +1317,7 @@ public void itemStateChanged(ItemEvent e) {
      }
      ArrayList<TransArticle> search_trans=new ArrayList<TransArticle>();
 	try {
-		search_trans = new StorageTool().searchTransByCategory(category);
+		search_trans = new OracleStorage().searchTransByCategory(category);
 	} catch (SQLException e1) {
 		e1.printStackTrace();
 	}
