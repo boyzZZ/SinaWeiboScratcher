@@ -265,7 +265,6 @@ public class MySQLStorage {
 					Connection conn=getConnection();
 					Statement stmt=conn.createStatement();
 					stmt.execute(SQL);
-					conn.commit();
 					stmt.close();
 					conn.close();
 	    }catch(Exception e){
@@ -279,7 +278,6 @@ public class MySQLStorage {
 						Connection conn=getConnection();
 						Statement stmt=conn.createStatement();
 						stmt.execute(SQL);
-						conn.commit();
 						stmt.close();
 						conn.close();
 		}catch(Exception e){

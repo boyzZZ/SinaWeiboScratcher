@@ -50,7 +50,6 @@ public class DownloadWorker implements Runnable {
 				request.addHeader("User-Agent","Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0");
 				HttpResponse response=httpClient.execute(request);
 				HttpEntity entity=response.getEntity();
-//				String content=EntityUtils.toString(entity);
 				File file=new File(Client.HTML_PATH+(i+100*ThreadIndex)+".html");
 				file.createNewFile();
 				FileWriter fo=new FileWriter(file);

@@ -1,10 +1,5 @@
 package com.fly.client;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
@@ -13,25 +8,18 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Properties;
 
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
-import javax.swing.Timer;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
@@ -43,6 +31,7 @@ import com.fly.function.repair.CheckHTML;
 import com.fly.model.OrgArticle;
 import com.fly.model.TransArticle;
 import com.fly.store.MySQLStorage;
+import com.fly.thread.ProcessClassify;
 import com.fly.thread.ProcessDownload;
 import com.fly.thread.ProcessParse;
 
@@ -55,6 +44,7 @@ public class Client {
 	
 	public final static String HTML_PATH = "html\\";
 	public final static String CATEGORY_DIR = "category";
+	private static int if_first=0;
 	
 	/**
 	 * 系统初始化，各种文件夹的准备
@@ -77,6 +67,13 @@ public class Client {
 				e.printStackTrace();
 			}
 		}
+		try{
+		Properties pros1=new Properties();
+		pros1.load(new FileInputStream("data\\temp.properties"));
+		if_first=Integer.parseInt(pros1.getProperty("IF_FIRST_LOGIN"));
+		}catch(Exception e){
+			
+		}
 	}
 	//微博客户端，程序入口处
 	public static void main(String[] args) {	
@@ -86,7 +83,18 @@ public class Client {
 		} catch (Exception e){
 			e.printStackTrace();
 		}
-     	new TaskClient().setVisible(true);
+		switch(if_first){
+		case 0: 
+     	new LoginClient().setVisible(true);
+     	break;
+		case 1:
+		new TaskClient().setVisible(true);
+		break;
+		case 2:
+        new ShowClient().setVisible(true);
+        break;
+		}
+		
    }
 }
 
@@ -367,6 +375,16 @@ class TaskClient extends javax.swing.JFrame {
     * Creates new form SinaWeibo
     */
    public TaskClient() {
+	   Properties pros1=new Properties();
+		try {
+			pros1.load(new FileInputStream("data\\temp.properties"));
+			pros1.setProperty("IF_FIRST_LOGIN", "1");
+			FileOutputStream fos=new FileOutputStream("data\\temp.properties");
+			pros1.store(fos, "");
+			fos.close();
+		} catch (Exception e){
+			e.printStackTrace();
+		}
        initComponents();
    }
 
@@ -520,16 +538,13 @@ class TaskClient extends javax.swing.JFrame {
         	  try {
 				HTMLTool.parseHTML();
 			} catch (FileNotFoundException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
         	  try {
 				Thread.sleep(10000);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
         	  Thread t1=new Thread(new ProcessParse(jProgressBar2));
@@ -562,6 +577,14 @@ class TaskClient extends javax.swing.JFrame {
        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
            public void actionPerformed(java.awt.event.ActionEvent evt) {
                new ClassifyWeiBo().classify();
+             try {
+   				Thread.sleep(10000);
+   			} catch (InterruptedException e) {
+   				e.printStackTrace();
+   			}
+           	  Thread t1=new Thread(new ProcessClassify(jProgressBar3));
+           	  t1.start();
+              
            }
        });
        jMenu6.add(jMenuItem7);
@@ -616,194 +639,6 @@ class TaskClient extends javax.swing.JFrame {
 
                   
 }
-
-class ShowClient1 extends JFrame{
-	/**
-	 * 展示窗口
-	 */
-	private static final long serialVersionUID = 1L;
-	private Timer timer;
-	private JProgressBar progressbar;
-	private JTextArea statics;
-	private JPanel menupl;
-	private JPanel mainpl;
-	private JPanel main;
-	
-	//构造函数
-	public ShowClient1(){
-	this.setTitle("Si1naWeibo Tool");
-	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	this.setSize(1200,800);
-	this.setLayout(new BorderLayout());
-	this.setLocation(100,40);
-	
-	
-/* 将整个页面分为2个部分，第一个部分为菜单栏，第二个部分为对应的显示页面*/
-	
-	//No.1主面版 （欢迎语）
-	mainpl=new JPanel();
-	mainpl.setBackground(Color.gray);
-	mainpl.setSize(1200,600);
-	JLabel lb1=new JLabel("欢迎使用SinaWeibo自动下载分类工具",JLabel.CENTER);
-	mainpl.add(lb1,BorderLayout.SOUTH);
-	this.add(mainpl,BorderLayout.SOUTH);
-	
-	//No.3 主面板 
-	main=new JPanel();
-	main.setBackground(Color.pink);
-	this.add(main,BorderLayout.CENTER);
-	//No.2 菜单栏
-	menupl=new JPanel();
-	menupl.setBackground(Color.LIGHT_GRAY);
-	JMenuBar menubar=new JMenuBar();
-	JMenu menu1=new JMenu("下载");
-	JMenu menu2=new JMenu("解析");
-	JMenu menu3=new JMenu("分类");
-	JMenu menu4=new JMenu("展示");
-	menubar.add(menu1);
-	menubar.add(menu2);
-	menubar.add(menu3);
-	menubar.add(menu4);
-	JMenuItem item1=new JMenuItem("开始下载");
-	JMenuItem item2=new JMenuItem("修复文件");
-	JMenuItem item3=new JMenuItem("内容显示");
-	JMenuItem item9=new JMenuItem("");
-	menu1.add(item1);
-	menu1.add(item2);
-	menu1.add(item3);
-	menu1.add(item9);
-	JMenuItem item4=new JMenuItem("解析微博");
-	JMenuItem item5=new JMenuItem("显示解析后文本");
-	menu2.add(item4);
-	menu2.add(item5);
-	JMenuItem item6=new JMenuItem("设置训练集");
-	JMenuItem item7=new JMenuItem("开始分类");
-	JMenuItem item8=new JMenuItem("分类统计");
-	menu3.add(item6);
-	menu3.add(item7);
-	menu3.add(item8);
-	
-	
-	item1.addActionListener(new ActionListener(){
-		public void actionPerformed(ActionEvent e) {
-			progressbar=new JProgressBar();
-			progressbar.setBackground(Color.red);
-		    progressbar.setMaximum(924);
-		    progressbar.setMinimum(0);
-		    progressbar.setValue(0);
-		    progressbar.setStringPainted(true);
-		    progressbar.setPreferredSize(new Dimension(800,40));
-		    progressbar.setLocation(200,200);
-			timer=new Timer(1000,new ActionListener(){
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					int finished=HTMLTool.hasFinished();
-					progressbar.setValue(finished);
-				}
-				
-			});
-			main.removeAll();
-			main.add(progressbar,BorderLayout.CENTER);
-			add(main,BorderLayout.CENTER);
-			main.repaint();
-			validate();
-			
-//			int pagenumber=HTMLTool.getlist();
-//   		HTMLTool.downloadHTML(pagenumber);
-   		timer.start();
-		}
-			
-	});
-   item2.addActionListener(new ActionListener(){
-   	public void actionPerformed(ActionEvent e) {
-   		
-		}
-		
-	});
-   item3.addActionListener(new ActionListener(){
-		public void actionPerformed(ActionEvent e) {
-			
-		}
-		
-	});
-   item4.addActionListener(new ActionListener(){
-		public void actionPerformed(ActionEvent e) {
-			try {
-				HTMLTool.parseHTML();
-			} catch (FileNotFoundException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
-		
-	});
-   item5.addActionListener(new ActionListener(){
-		public void actionPerformed(ActionEvent e) {
-			
-		}
-		
-	});
-   item6.addActionListener(new ActionListener(){
-		public void actionPerformed(ActionEvent e) {
-			
-		}
-		
-	});
-   item7.addActionListener(new ActionListener(){
-		public void actionPerformed(ActionEvent e) {
-			new ClassifyWeiBo().classify();
-		}
-		
-	});
-   item8.addActionListener(new ActionListener(){
-		public void actionPerformed(ActionEvent e) {
-			
-		}
-		
-	});
-   item9.addActionListener(new ActionListener(){
-
-   	public void actionPerformed(ActionEvent e) {
-			statics=new JTextArea();
-			statics.setEditable(false);
-			statics.setText("截至到目前，您所有的微博数为9999条，其中原创的微博有6723条，转发微博为2343条。\\r您的第一条微博始于2006年6月 说的是巴啦啦啦啦，根据您的要求，我们将微博分成了10大类别，准确度依赖与您的训练集的质量，具体展示如右图表格");
-			statics.setSize(222,200);
-			main.removeAll();
-			main.add(statics,BorderLayout.CENTER);
-			add(main,BorderLayout.CENTER);
-			main.repaint();
-			validate();
-		}
-		
-		
-	});
-   menu4.addActionListener(new ActionListener(){
-		public void actionPerformed(ActionEvent e) {
-			statics=new JTextArea();
-			statics.setEditable(false);
-			statics.setText("截至到目前，您所有的微博数为9999条，其中原创的微博有6723条，转发微博为2343条。\\r您的第一条微博始于2006年6月 说的是巴啦啦啦啦，根据您的要求，我们将微博分成了10大类别，准确度依赖与您的训练集的质量，具体展示如右图表格");
-			statics.setSize(222,200);
-			main.removeAll();
-			main.add(statics,BorderLayout.CENTER);
-			add(main,BorderLayout.CENTER);
-			main.repaint();
-			validate();
-		}
-   	
-   });
-   menupl.add(menubar);
-   this.add(menupl,BorderLayout.NORTH);
-   
-   
-	this.setVisible(true);
-	}
-	};
-
-
-
 /**
  * 微博详细查询界面
  * @author fly
@@ -855,6 +690,16 @@ class ShowClient extends javax.swing.JFrame implements ItemListener{
    * Creates new form SinaWeibo
    */
   public ShowClient() {
+	Properties pros1=new Properties();
+	try {
+		pros1.load(new FileInputStream("data\\temp.properties"));
+		pros1.setProperty("IF_FIRST_LOGIN", "2");
+		FileOutputStream fos=new FileOutputStream("data\\temp.properties");
+		pros1.store(fos, "");
+		fos.close();
+	} catch (Exception e){
+		e.printStackTrace();
+	}
   	this.setLocation(400,200);
       initComponents();
   }
